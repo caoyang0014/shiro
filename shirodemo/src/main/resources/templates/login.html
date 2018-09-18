@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+
+    <title>LoginDemo</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" ></meta>
+    <meta name="renderer" content="webkit"></meta>
+    <title>登录</title>
+</head>
+
+<body>
+<script>
+
+    function sendAjax()
+    {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        alert(username + "----"+password);
+        //window.open(username);
+        $.ajax(
+            {
+                url:"submitLogin",
+                data:$("#form").serialize(),
+                type:"post",
+                dataType:"json",
+                success:function(data)
+                {
+                    alert(data);
+                    if(data.status==200){
+
+                        location.href = "/index";
+                    }else if(data.status==400){
+                        alert("账号不存在");
+                    }else if(data.status==500){
+                        alert("密码错误");
+
+                    }else{
+                        alert("账号异常");
+                    }
+
+                }
+
+            });
+    }
+
+</script>
+<form id="form">
+<div class="container">
+
+    <div>
+        <div>
+            <div>
+                <input type="text"  name="username" id="username" placeholder="登录账号" />
+                            <!--<span class="icon icon-user margin-small"></span>-->
+            </div>
+        </div>
+        <div>
+            <div>
+                <input type="password" name="password" id="password"  placeholder="登录密码" />
+
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <input type="button" onclick="sendAjax()" value="登录" id="ajaxLogin" />
+    </div>
+</div>
+</form>
+</body>
+</html>
